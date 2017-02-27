@@ -91,13 +91,19 @@ bio.display = function () {
 	var locationContact = HTMLlocation.replace('%data%',this.contacts.location);
 	$('#topContacts, #footerContacts').append(mobileContact).append(emailContact).append(twitterContact)
 							.append(githubContact).append(locationContact);
+							
+	$('#header').append(HTMLskillsStart);
+	this.skills.forEach(function(skillText){
+		var skill = HTMLskills.replace('%data%', skillText);
+		$('#skills').append(skill);
+	});
 
 };
 
 education.display = function () {
 	$('#education').append(HTMLschoolStart);
 	for(var i = 0; i < this.schools.length; i++){
-		var schoolName = HTMLschoolName.replace('%data%', this.schools[i].name) + 
+		var schoolName = HTMLschoolName.replace('%data%', this.schools[i].name).replace('#', this.schools[i].url) + 
 							HTMLschoolDegree.replace('%data%', this.schools[i].degree);
 		var schoolLocation = HTMLschoolLocation.replace('%data%', this.schools[i].location);
 		var schoolDates = HTMLschoolDates.replace('%data%', this.schools[i].dates);
@@ -106,7 +112,8 @@ education.display = function () {
 		$('.education-entry:last').append(schoolName).append(schoolLocation)
 									.append(schoolDates).append(schoolMajor);
 	}
-	$('.education-entry:last').append(HTMLonlineClasses);
+	$('#education').append(HTMLonlineClasses);
+	$('#education').append(HTMLschoolStart);
 	for(var i = 0; i < this.onlineCourses.length; i++){
 		var courseTitle = HTMLonlineTitle.replace('%data%', this.onlineCourses[i].title) +
 							HTMLonlineSchool.replace('%data%',this.onlineCourses[i].school);
@@ -118,15 +125,16 @@ education.display = function () {
 
 work.display = function(){
 	$('#workExperience').append(HTMLworkStart);
-	for(var i = 0; i < this.jobs.length; i++){
-		var jobEmployer = HTMLworkEmployer.replace('%data%', this.jobs[i].employer);
-		var jobName = HTMLworkTitle.replace('%data%', this.jobs[i].title);
-		var jobDates = HTMLworkDates.replace('%data%', this.jobs[i].dates);
-		var jobDescription = HTMLworkDescription.replace('%data%', this.jobs[i].description);
-
+	for(var j = 0; j < this.jobs.length; j++){
+		var jobEmployer = HTMLworkEmployer.replace('%data%', this.jobs[j].employer);
+		var jobName = HTMLworkTitle.replace('%data%', this.jobs[j].title);
+		var jobDates = HTMLworkDates.replace('%data%', this.jobs[j].dates);
+		var jobDescription = HTMLworkDescription.replace('%data%', this.jobs[j].description);
+		var jobLocation = HTMLworkLocation.replace('%data%', this.jobs[j].location);
+		
 		$('.work-entry:last').append(
 			jobEmployer + jobName	
-		).append(jobDates).append(jobDescription);
+		).append(jobDates).append(jobDescription).append(jobLocation);
 	}
 };
 
